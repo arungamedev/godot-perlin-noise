@@ -1,0 +1,43 @@
+extends Node2D
+
+@export var point : PackedScene
+var level = 0
+var y = []
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	for c in $Points.get_children():
+		c.queue_free()
+	
+	y.clear()
+	
+	for x in range(-576.0,576.0):
+		y.append(0.0)
+	
+	for o in range(0,level+1):
+		var eps = [randf_range(-1,1)]
+		for a in range(0,2**o):
+			eps.append(randf_range(-1,1))
+			for x in range(576.0*(-1.0+a*2.0**(1.0-o)),576.0*(-1.0+(a+1.0)*2.0**(1-o))):
+				var smoothstep = smoothstep(a*2.0**(-o),(a+1.0)*2.0**(-o),(x+576.0)/1152.0)
+				y[int(x)+576] += 648.0*(((x+576.0)/1152.0-a*2.0**(-o))*eps[a]
+				+ (((x+576.0)/1152.0-(a+1)*2.0**(-o))*eps[a+1]
+				- ((x+576.0)/1152.0-a*2.0**(-o))*eps[a])*smoothstep)
+				
+				#show each level
+				var p = point.instantiate()
+				p.global_position = Vector2(x,y[x+576])
+				p.modulate = Color(p.modulate,(o+1)/(3*level+1))
+				$Points.add_child(p)
+	
+	#Show only final level
+	#for x in range(-576.0,576.0):
+		#var p = point.instantiate()
+		#p.global_position = Vector2(x,y[x+576])
+		##p.modulate = Color(p.modulate,(o+1)/(2*level+1))
+		#$Points.add_child(p)
+
+
+func _on_level_changed(value: float) -> void:
+	level = value
+	_ready()
