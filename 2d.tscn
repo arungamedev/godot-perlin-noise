@@ -1,0 +1,58 @@
+[gd_scene load_steps=7 format=3 uid="uid://cvofc53klldc6"]
+
+[ext_resource type="Script" uid="uid://bbwyqc2fxuga1" path="res://2d.gd" id="1_y7yf3"]
+[ext_resource type="PackedScene" uid="uid://bfrul6k0o4n18" path="res://2dpoint.tscn" id="2_vcvoh"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_adb1b"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_adb1b"]
+
+[sub_resource type="Sky" id="Sky_vcvoh"]
+sky_material = SubResource("ProceduralSkyMaterial_adb1b")
+
+[sub_resource type="Environment" id="Environment_f8tiu"]
+background_mode = 2
+sky = SubResource("Sky_vcvoh")
+
+[node name="2d" type="Node3D"]
+script = ExtResource("1_y7yf3")
+point = ExtResource("2_vcvoh")
+
+[node name="Points" type="Node3D" parent="."]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Button" type="Button" parent="CanvasLayer"]
+offset_left = 8.0
+offset_top = 10.0
+offset_right = 109.0
+offset_bottom = 66.0
+focus_mode = 0
+text = "RESET"
+
+[node name="SpinBox" type="SpinBox" parent="CanvasLayer"]
+offset_left = 8.0
+offset_top = 74.0
+offset_right = 109.0
+offset_bottom = 130.0
+max_value = 15.0
+alignment = 1
+prefix = "Level:"
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50, 0)
+
+[node name="Camera3D" type="Camera3D" parent="CharacterBody3D"]
+current = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
+shape = SubResource("BoxShape3D_adb1b")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_f8tiu")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.872752, -0.435278, 0.220992, 0, 0.452699, 0.891663, -0.488164, -0.778201, 0.395094, 0, 0, 0)
+
+[connection signal="pressed" from="CanvasLayer/Button" to="." method="_ready"]
+[connection signal="value_changed" from="CanvasLayer/SpinBox" to="." method="_on_level_changed"]

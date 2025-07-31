@@ -1,0 +1,25 @@
+[gd_scene load_steps=2 format=3 uid="uid://b5dt2uj4mhpoo"]
+
+[ext_resource type="Script" uid="uid://bwxs77ymn8eys" path="res://start.gd" id="1_ots34"]
+
+[node name="start" type="Node2D"]
+script = ExtResource("1_ots34")
+
+[node name="1d" type="Button" parent="."]
+offset_left = 269.0
+offset_top = 234.0
+offset_right = 509.0
+offset_bottom = 399.0
+theme_override_font_sizes/font_size = 36
+text = "1 dimension"
+
+[node name="2d" type="Button" parent="."]
+offset_left = 603.0
+offset_top = 233.0
+offset_right = 843.0
+offset_bottom = 398.0
+theme_override_font_sizes/font_size = 36
+text = "2 dimensions"
+
+[connection signal="pressed" from="1d" to="." method="_on_1d_pressed"]
+[connection signal="pressed" from="2d" to="." method="_on_2d_pressed"]

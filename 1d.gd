@@ -18,11 +18,13 @@ func _ready() -> void:
 		var eps = [randf_range(-1,1)]
 		for a in range(0,2**o):
 			eps.append(randf_range(-1,1))
-			for x in range(576.0*(-1.0+a*2.0**(1.0-o)),576.0*(-1.0+(a+1.0)*2.0**(1-o))):
+			for x in range(576.0*(-1.0+a*2.0**(1.0-o)),576.0*(-1.0+(a+1.0)*2.0**(1.0-o))):
+				var left = 648.0*((x+576.0)/1152.0-a*2.0**(-o))*eps[a]
+				var right = 648.0*((x+576.0)/1152.0-(a+1)*2.0**(-o))*eps[a+1]
+				
 				var smoothstep = smoothstep(a*2.0**(-o),(a+1.0)*2.0**(-o),(x+576.0)/1152.0)
-				y[int(x)+576] += 648.0*(((x+576.0)/1152.0-a*2.0**(-o))*eps[a]
-				+ (((x+576.0)/1152.0-(a+1)*2.0**(-o))*eps[a+1]
-				- ((x+576.0)/1152.0-a*2.0**(-o))*eps[a])*smoothstep)
+				
+				y[int(x)+576] += left + (right - left) * smoothstep
 				
 				#show each level
 				var p = point.instantiate()
@@ -34,7 +36,7 @@ func _ready() -> void:
 	#for x in range(-576.0,576.0):
 		#var p = point.instantiate()
 		#p.global_position = Vector2(x,y[x+576])
-		##p.modulate = Color(p.modulate,(o+1)/(2*level+1))
+		#p.modulate = Color(p.modulate,(o+1)/(2*level+1))
 		#$Points.add_child(p)
 
 
