@@ -27,17 +27,16 @@ func _ready() -> void:
 				y[int(x)+576] += left + (right - left) * smoothstep
 				
 				#show each level
-				var p = point.instantiate()
-				p.global_position = Vector2(x,y[x+576])
-				p.modulate = Color(p.modulate,(o+1)/(3*level+1))
-				$Points.add_child(p)
+				#var p = point.instantiate()
+				#p.global_position = Vector2(x,y[x+576])
+				#p.modulate = Color(p.modulate,(o+1)/(3*level+1))
+				#$Points.add_child(p)
 	
 	#Show only final level
-	#for x in range(-576.0,576.0):
-		#var p = point.instantiate()
-		#p.global_position = Vector2(x,y[x+576])
-		#p.modulate = Color(p.modulate,(o+1)/(2*level+1))
-		#$Points.add_child(p)
+	for x in range(-576.0,576.0):
+		var p = point.instantiate()
+		p.global_position = Vector2(x,y[x+576])
+		$Points.add_child(p)
 
 
 func _on_level_changed(value: float) -> void:

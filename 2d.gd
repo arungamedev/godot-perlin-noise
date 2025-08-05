@@ -65,6 +65,11 @@ func _physics_process(delta):
 	player.move_and_slide()
 	player.velocity.y = Input.get_axis("down","up") * speed
 	
+	if player.velocity.z != 0 and player.velocity.x != 0:
+		$CanvasLayer/SpinBox.editable = false
+	else:
+		$CanvasLayer/SpinBox.editable = true
+	
 	if Input.is_action_just_pressed("rmb"):
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	elif Input.is_action_just_released("rmb"):
