@@ -1,8 +1,10 @@
 [gd_scene load_steps=2 format=3 uid="uid://cjxn7sv8cg304"]
 
-[ext_resource type="Texture2D" uid="uid://k8kwe7ixn51t" path="res://icon.svg" id="1_hnywo"]
+[ext_resource type="Texture2D" uid="uid://vnnvvt8tvsvh" path="res://blackdot.png" id="1_hnywo"]
 
 [node name="1dPoint" type="Sprite2D"]
 modulate = Color(0, 0, 0, 1)
-scale = Vector2(0.02, 0.02)
+position = Vector2(0.005, -0.005)
+scale = Vector2(2, 2)
 texture = ExtResource("1_hnywo")
+metadata/_edit_horizontal_guides_ = [-3.0]

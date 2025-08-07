@@ -2,6 +2,7 @@ extends Node3D
 
 @export var point : PackedScene
 var level = 0
+var max_level = 7
 var z = []
 
 @onready var player = $CharacterBody3D
@@ -11,6 +12,8 @@ var mouse_sensitivity = 0.002
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	$CanvasLayer/SpinBox.max_value = max_level
+	
 	for c in $Points.get_children():
 		c.queue_free()
 	
@@ -21,7 +24,7 @@ func _ready() -> void:
 		for y in range(-58.0,58.0):
 			z[int(x)+58].append(0.0)
 	
-	for o in range(0,level+1):
+	for o in range(0,max_level+1):
 		var theta = []
 		
 		for a in range(0,2**o+1):
@@ -42,18 +45,28 @@ func _ready() -> void:
 						var smoothstepy = smoothstep(b*2.0**(-o),(b+1.0)*2.0**(-o),(y+58.0)/115.20)
 						
 						z[int(x)+58][int(y)+58] += sw + (se-sw)*smoothstepx + (nw-sw)*smoothstepy + (ne-nw-se+sw)*smoothstepx*smoothstepy
-	
-	#Show only final level
-	for x in range(-58.0,58.0):
-		for y in range(-58.0,58.0):
-			var p = point.instantiate()
-			$Points.add_child(p)
-			p.global_position = Vector3(x,z[int(x)+58][int(y)+58],y)
+						
+						var p = point.instantiate()
+						$Points.add_child(p)
+						p.global_position = Vector3(x,z[int(x)+58][int(y)+58],y)
+						p.add_to_group(str(o))
+						if o != level:
+							p.hide()
 
 
 func _on_level_changed(value: float) -> void:
 	level = value
-	_ready()
+	for l in range(0,level):
+		for p in get_tree().get_nodes_in_group(str(l)):
+			p.hide()
+	
+	for l in range(level,level+1):
+		for p in get_tree().get_nodes_in_group(str(l)):
+			p.show()
+	
+	for l in range(level+1,max_level+1):
+		for p in get_tree().get_nodes_in_group(str(l)):
+			p.hide()
 
 
 func _physics_process(delta):
