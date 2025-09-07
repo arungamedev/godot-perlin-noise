@@ -51,4 +51,3 @@ func _on_level_changed(value: float) -> void:
 	for l in range(level+1,max_level+1):
 		for p in get_tree().get_nodes_in_group(str(l)):
 			p.hide()
-	

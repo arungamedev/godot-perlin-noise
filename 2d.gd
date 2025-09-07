@@ -87,10 +87,13 @@ func _physics_process(delta):
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	elif Input.is_action_just_released("rmb"):
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-
+	
+	var caminput = Input.get_vector("lookleft", "lookright", "lookup", "lookdown")
+	player.rotate_y(-caminput.x * delta)
+	cam.rotate_x(-caminput.y * delta)
+	cam.rotation.x = clampf(cam.rotation.x, -deg_to_rad(90), deg_to_rad(90))
 
 func _input(event):
 	if event is InputEventMouseMotion and Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
 		player.rotate_y(-event.relative.x * mouse_sensitivity)
 		cam.rotate_x(-event.relative.y * mouse_sensitivity)
-		cam.rotation.x = clampf(cam.rotation.x, -deg_to_rad(90), deg_to_rad(90))
