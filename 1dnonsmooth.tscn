@@ -1,0 +1,35 @@
+[gd_scene load_steps=3 format=3 uid="uid://dyetgxnuikwcj"]
+
+[ext_resource type="Script" uid="uid://fgehrscjd3hm" path="res://1dnonsmooth.gd" id="1_w66l5"]
+[ext_resource type="PackedScene" uid="uid://cjxn7sv8cg304" path="res://1dpoint.tscn" id="2_1slqb"]
+
+[node name="1d" type="Node2D"]
+script = ExtResource("1_w66l5")
+point = ExtResource("2_1slqb")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.9, 0.9)
+
+[node name="Points" type="Node2D" parent="."]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Button" type="Button" parent="CanvasLayer"]
+offset_left = 8.0
+offset_top = 10.0
+offset_right = 109.0
+offset_bottom = 66.0
+focus_mode = 0
+text = "RESET"
+
+[node name="SpinBox" type="SpinBox" parent="CanvasLayer"]
+offset_left = 8.0
+offset_top = 74.0
+offset_right = 109.0
+offset_bottom = 130.0
+max_value = 10.0
+alignment = 1
+prefix = "Level:"
+
+[connection signal="pressed" from="CanvasLayer/Button" to="." method="_ready"]
+[connection signal="value_changed" from="CanvasLayer/SpinBox" to="." method="_on_level_changed"]
